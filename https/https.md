@@ -22,4 +22,4 @@ HTTPS 协议的主要功能基本都依赖于 TLS/SSL 协议，TLS/SSL 的功能
 10. 服务端发送ChangeCipherSpec，指示Client从现在开始发送的消息都是加密过的
 11. Server发送Finishd，包含了前面所有握手消息的hash，可以让client验证握手过程是否被第三方篡改，并且证明自己是Certificate密钥的拥有者，即证明自己的身份
 
-![Image text](../pic/ssl.svg)
+![Image text](https://raw.githubusercontent.com/zhanxu33/Network/master/https/pic/httpsl.png)
