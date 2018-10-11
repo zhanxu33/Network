@@ -22,4 +22,21 @@ HTTPS 协议的主要功能基本都依赖于 TLS/SSL 协议，TLS/SSL 的功能
 10. 服务端发送ChangeCipherSpec，指示Client从现在开始发送的消息都是加密过的
 11. Server发送Finishd，包含了前面所有握手消息的hash，可以让client验证握手过程是否被第三方篡改，并且证明自己是Certificate密钥的拥有者，即证明自己的身份
 
-![Image text](https://raw.githubusercontent.com/zhanxu33/Network/master/https/pic/httpsl.png)
+![SSL连接过程](https://raw.githubusercontent.com/zhanxu33/Network/master/https/pic/ssl.png)
+
+### HTTPS连接过程
+1. 首先建立TCP握手连接
+2. 进行ssl协议的握手密钥交换
+3. 然后通过共同约定的密钥开始通信
+
+![HTTPS连接过程](https://raw.githubusercontent.com/zhanxu33/Network/master/https/pic/httpsl.png)
+
+### 证书
+1. 服务方 Server 向第三方机构CA提交公钥、组织信息、个人信息(域名)等信息并申请认证
+2. CA通过线上、线下等多种手段验证申请者提供信息的真实性，如组织是否存在、企业是否合法，是否拥有域名的所有权等
+3. 如信息审核通过，CA会向申请者签发认证文件-证书。证书包含以下信息：申请者公钥、申请者的组织信息和个人信息、签发机构 CA的信息、有效时间、证书序列号等信息的明文，同时包含一个签名; 签名的产生算法：首先，使用散列函数计算公开的明文信息的信息摘要，然后，采用 CA的私钥对信息摘要进行加密，密文即签名
+4. 客户端 Client 向服务器 Server 发出请求时，Server 返回证书文件
+5. 客户端 Client 读取证书中的相关的明文信息，采用相同的散列函数计算得到信息摘要，然后，利用对应 CA的公钥解密签名数据，对比证书的信息摘要，如果一致，则可以确认证书的合法性，即公钥合法
+6. 客户端还会验证证书相关的域名信息、有效时间等信息; 客户端会内置信任CA的证书信息(包含公钥)，如果CA不被信任，则找不到对应 CA的证书，证书也会被判定非法
+
+![证书](https://raw.githubusercontent.com/zhanxu33/Network/master/https/pic/zhengshu.png)
